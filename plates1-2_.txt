@@ -1,0 +1,18 @@
+
+                    Estimate Std. Error t value Pr(>|t|)    
+substancecontrol     0.96967    0.06535  14.837 5.88e-10 ***
+substanceDMSO        0.04467    0.06535   0.683    0.505    
+substanceneoton1     0.89267    0.06535  13.659 1.75e-09 ***
+substanceneoton10    0.87167    0.06535  13.338 2.38e-09 ***
+substancePBS20       0.99100    0.06535  15.164 4.41e-10 ***
+substanceunifusol2   0.91733    0.06535  14.036 1.22e-09 ***
+substanceunifusol20  1.12900    0.06535  17.275 7.75e-11 ***
+
+                    Estimate Std. Error t value Pr(>|t|)    
+substancecontrol     0.61567    0.04633  13.288 2.50e-09 ***
+substanceDMSO        0.04533    0.04633   0.978    0.344    
+substanceneoton1     0.84267    0.04633  18.187 3.88e-11 ***
+substanceneoton10    0.78300    0.04633  16.899 1.04e-10 ***
+substancePBS20       0.83967    0.04633  18.122 4.08e-11 ***
+substanceunifusol2   0.73400    0.04633  15.841 2.47e-10 ***
+substanceunifusol20  0.61033    0.04633  13.172 2.80e-09 ***

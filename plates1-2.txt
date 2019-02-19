@@ -1,0 +1,50 @@
+> summary(ourModel1)
+
+Call:
+lm(formula = MTT ~ substance - 1, data = plate1)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.187667 -0.044667 -0.004333  0.039333  0.223000 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+substancecontrol     0.96967    0.06535  14.837 5.88e-10 ***
+substanceDMSO        0.04467    0.06535   0.683    0.505    
+substanceneoton1     0.89267    0.06535  13.659 1.75e-09 ***
+substanceneoton10    0.87167    0.06535  13.338 2.38e-09 ***
+substancePBS20       0.99100    0.06535  15.164 4.41e-10 ***
+substanceunifusol2   0.91733    0.06535  14.036 1.22e-09 ***
+substanceunifusol20  1.12900    0.06535  17.275 7.75e-11 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1132 on 14 degrees of freedom
+Multiple R-squared:  0.9894,	Adjusted R-squared:  0.9841 
+F-statistic: 187.2 on 7 and 14 DF,  p-value: 9.748e-13
+
+> 
+> summary(ourModel2)
+
+Call:
+lm(formula = MTT ~ substance - 1, data = plate2)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.11300 -0.04500 -0.00100  0.03633  0.14367 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+substancecontrol     0.61567    0.04633  13.288 2.50e-09 ***
+substanceDMSO        0.04533    0.04633   0.978    0.344    
+substanceneoton1     0.84267    0.04633  18.187 3.88e-11 ***
+substanceneoton10    0.78300    0.04633  16.899 1.04e-10 ***
+substancePBS20       0.83967    0.04633  18.122 4.08e-11 ***
+substanceunifusol2   0.73400    0.04633  15.841 2.47e-10 ***
+substanceunifusol20  0.61033    0.04633  13.172 2.80e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.08025 on 14 degrees of freedom
+Multiple R-squared:  0.991,	Adjusted R-squared:  0.9865 
+F-statistic:   221 on 7 and 14 DF,  p-value: 3.1e-13
