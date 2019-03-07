@@ -5,13 +5,13 @@ data(coagulation, package='faraway')
 data1 <- read.csv('Book1.csv')
 
 
-data1 <- read.csv('Book1.csv')
+data1 <- read.csv('Book1.csv', sep = ";")
 
 View(data1)
 
 plot(coag ~ diet, data=coagulation)
 
-plot(MTT ~ substance, data=data1)
+plot(TMRM ~ substance, data=data1)
 
 summary(coagulation)
 
@@ -56,8 +56,8 @@ library(dplyr)
 group_by(my_data, substance) %>%
   summarise(
     count = n(),
-    mean = mean(MTT, na.rm = TRUE),
-    sd = sd(MTT, na.rm = TRUE)
+    mean = mean(TMRM, na.rm = TRUE),
+    sd = sd(TMRM, na.rm = TRUE)
   )
 
 
@@ -94,18 +94,20 @@ ggline(my_data, x = "substance", y = "MTT",
 
 # If you still want to use R base graphs, type the following scripts:
 # Box plot
-boxplot(weight ~ group, data = my_data,
+boxplot(TMRM ~ substance, data = my_data,
         xlab = "Treatment", ylab = "Weight",
         frame = FALSE, col = c("#00AFBB", "#E7B800", "#FC4E07"))
 # plotmeans
 library("gplots")
-plotmeans(weight ~ group, data = my_data, frame = FALSE,
+plotmeans(TMRM ~ substance, data = my_data, frame = FALSE,
           xlab = "Treatment", ylab = "Weight",
           main="Mean Plot with 95% CI") 
 
 
 # Compute the analysis of variance
-res.aov <- aov(MTT ~ substance, data = my_data)
+res.aov <- aov(TMRM ~ substance, data = my_data)
+
+res.aov <- aov(TMRM ~ substance, data = my_data)
 # Summary of the analysis
 summary(res.aov)
 
