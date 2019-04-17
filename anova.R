@@ -63,7 +63,22 @@ summary(fit3)
 fit4 <- aov(price ~ origin * store, data=mydata)
 summary(fit4)
 
+# Interaction 2
 
+mydata1 <- npk
+str(mydata1)
+
+fit5 <- aov(yield~N*P, data=mydata1)
+summary(fit5)
+
+fit6 <- aov(yield ~ N + P + K, data=mydata1)
+summary(fit6)
+
+mydata2 <- iris
+str(mydata2)
+
+fit5 <- aov(Sepal.Width~Species, data=mydata2)
+summary(fit5)
 
 # Pairwise comparisons
 
@@ -89,17 +104,22 @@ mydata2$subject <- as.factor(mydata2$subject)
 
 fit1 <- aov(well_being ~ therapy, data = mydata2)
 summary(fit1)
-fit1b <- aov(well_being ~ therapy + Error(subject/therapy), data = mydata2)
+fit1b <- aov(well_being ~ therapy + 
+            Error(subject/therapy), 
+             data = mydata2)
 summary(fit1b)
 
 
-fit2 <- aov(well_being ~ therapy*price, data = mydata2)
+fit2 <- aov(well_being ~ therapy*price, 
+            data = mydata2)
 summary(fit2)
 
 ggplot(mydata2, aes(x = price, y = well_being)) + 
   geom_boxplot()
 
-fit2b <- aov(well_being ~ therapy*price + Error(subject/(therapy*price)), data = mydata2)
+fit2b <- aov(well_being ~ therapy*price + 
+               Error(subject/(therapy*price)), 
+             data = mydata2)
 summary(fit2b)
 
 ggplot(mydata2, aes(x = price, y = well_being)) + 
@@ -107,8 +127,36 @@ ggplot(mydata2, aes(x = price, y = well_being)) +
   facet_grid(~subject)
 
 
-fit3 <- aov(well_being ~ therapy*price*sex, data = mydata2)
+fit3 <- aov(well_being ~ therapy*price*sex, 
+            data = mydata2)
 summary(fit3)
-fit3b <- aov(well_being ~ therapy*price*sex + Error(subject/(therapy*price)), data = mydata2)
+fit3b <- aov(well_being ~ therapy*price*sex + 
+               Error(subject/(therapy*price)), 
+             data = mydata2)
 summary(fit3b)
 
+#
+
+mydata0 <- read.csv('Pillulkin.csv')
+str(mydata0)
+mydata0$patient <- as.factor(mydata0$patient)
+
+fit2b <- aov(temperature ~ pill*doctor + 
+               Error(doctor/patient ), 
+             data = mydata0)
+summary(fit2b)
+
+aov(temperature ~ pill*doctor + 
+      Error(doctor/patient ), 
+    data = df)
+
+install.packages("Hmisc")
+
+library(ggplot2)
+library(Hmisc)
+obj <- ggplot(ToothGrowth, aes(x = as.factor(dose), y = len, col = supp, group = supp))+
+  stat_summary(fun.data = mean_cl_boot, geom = 'errorbar', width = 0.1, position = position_dodge(0.2))+
+  stat_summary(fun.data = mean_cl_boot, geom = 'point', size = 3, position = position_dodge(0.2))+
+  stat_summary(fun.data = mean_cl_boot, geom = 'line', position = position_dodge(0.2))
+
+obj
