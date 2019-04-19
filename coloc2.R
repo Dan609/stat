@@ -58,10 +58,30 @@ shapiro.test(data1$bTau[data1$probe =='p28'])
 
 pairwise.t.test(data1$bTau, data1$probe, p.adj = "bonf")
 
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "holm")
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "fdr")
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "fdr", pool.sd=FALSE)
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "hochberg")
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "hommel")
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "BH")
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "BY")
+
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "none")
+
 # Performs Anderson-Darling all-pairs comparison test.
 
 adAllPairsTest(bTau ~ probe, data1)
 out <- adAllPairsTest(bTau ~ probe, data1, p.adjust="holm")
+summary(out)
+summaryGroup(out)
+
+adAllPairsTest(bTau ~ probe, data1)
+out <- adAllPairsTest(bTau ~ probe, data1, p.adjust="fdr")
 summary(out)
 summaryGroup(out)
 
@@ -76,13 +96,18 @@ if (F){
 # post hoc analysis
 
 dunn.test(data1$bTau, data1$probe,
-          method="bonferroni",
+          method="bh",
           wrap=TRUE, kw=TRUE, label=TRUE,
           alpha=0.05, altp=TRUE)
 
 #  post-hoc test after having calculated an ANOVA
 
 PostHocTest(aov(data1$bTau ~ data1$probe, data = data1), method = "scheffe")
+
+r.aov <- aov(data1$bTau ~ data1$probe, data = data1)
+
+
+PostHocTest(aov(data1$bTau ~ data1$probe, data = data1), method = "lsd")
 
 r.aov <- aov(data1$bTau ~ data1$probe, data = data1)
 
@@ -124,11 +149,24 @@ qqPlot(data1$bTau)
 # Perform pairwise comparisons
 # ?compare_means
 
+pairwise.t.test(data1$bTau, data1$probe, p.adj = "fdr")
+
 compare_means(bTau ~ probe,  data = data1, method = "t.test")
 compare_means(bTau ~ probe,  data = data1, method = "wilcox.test")
 
 write.csv(compare_means(bTau ~ probe,  data = data1, method = "t.test"), file="t.test.bTau.csv")
 write.csv(compare_means(bTau ~ probe,  data = data1, method = "wilcox.test"), file="wilcox.test.bTau.csv")
+
+
+compare_means(bTau ~ probe,  data = data1, method = "anova")
+compare_means(bTau ~ probe,  data = data1, method = "kruskal.test")
+
+compare_means(bTau ~ probe,  data = data1, method = "t.test", ref.group = 'p7')
+compare_means(bTau ~ probe,  data = data1, method = "wilcox.test", ref.group = 'p7')
+#write.csv(compare_means(bTau ~ probe,  data = data1, method = "t.test", ref.group = 'p7'), file="t.test_with_control.bTau.csv")
+
+
+
 # (1) Compute summary statistics for the variable probe
 # (2) Bar plots of means + individual jitter points + errors
 

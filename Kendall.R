@@ -91,7 +91,7 @@ r.aov <- aov(data1$bTau ~ data1$probe, data = data1)
 PostHocTest(aov(data1$bTau ~ data1$probe, data = data1), method = "hsd",
             conf.level=NA)
 
-# Kruskal Wallis Test One Way Anova by Ranks ???????????????? ???????????????? — ??????????????
+# Kruskal Wallis Test One Way Anova by Ranks
 
 kruskal.test(data1$bTau ~ data1$probe)
 
@@ -162,10 +162,32 @@ qplot(probe, bTau, data=data1) +
 
 # (2) Bar plot
 
+##
+
 ggplot(df.summary.bTau, aes(probe, bTau)) +
-  geom_bar(stat = "identity", fill = "lightgray", 
-           color = "black") +
-  geom_errorbar(aes(ymin = bTau-sd, ymax = bTau+sd), width = 0.2)
+  geom_bar(stat = "identity", fill = 'gray', 
+           color = "black", size= 1, show.legend=TRUE) +
+  geom_errorbar(aes(ymin = bTau-sd, ymax = bTau+sd), width = 0.2, size=1) +
+  theme(
+    # Change axis lines
+    axis.line = element_line(size = 1),
+    
+    # Change axis ticks text labels: font color, size and face
+    axis.text = element_text(),       # Change tick labels for all axes
+    axis.text.x = element_text(face = "bold",
+                               size = 12),     # Change x axis tick labels only
+    axis.text.y = element_text(face = "bold", 
+                               size = 12, angle = 0),     # Change y axis tick labels only
+    
+    # Change axis ticks line: font color, size, linetype and length
+    axis.ticks = element_line(),      # Change ticks line fo all axes
+    axis.ticks.x = element_line(),    # Change x axis ticks only
+    axis.ticks.y = element_line(),    # Change y axis ticks only
+    axis.ticks.length = unit(3, "pt") # Change the length of tick marks
+  ) +
+  geom_point() +
+  ylim(0, 1)
+
 
 # Visualize: Specify the comparisons you want color
 my_comparisons <- list( c("p12","p15"), c("p15","p21"), c("p21", "p28"))
@@ -208,8 +230,8 @@ plot(TukeyHSD(res.aov), las = 1)
 
 # plotmeans
 
-plotmeans(bTau ~ probe, data = data1, frame = FALSE, 
-          mean.labels=FALSE, connect=TRUE,
+plotmeans(bTau ~ probe, data = data1, frame = FALSE, ylim = c(0, 1),
+          mean.labels=TRUE, connect=TRUE, digits = 2,
           n.label=TRUE, text.n.label="n = ",
           xlab = "Passages", ylab = "Kendall's Tau-b rank correlation value",
           main="Colocalization of Myosin-9 and F-actin in WJMSC-1 cells, 
@@ -219,6 +241,22 @@ plotmeans(bTau ~ probe, data = data1, frame = FALSE,
                                                                 "p21", "p25", "p27", 
                                                                 "p28")) +
   scale_y_continuous(name="Kendall's Tau-b rank correlation value", limits=c(0, 1))
+
+
+
+plotmeans(bTau ~ probe, data = data1, frame = FALSE, ylim = c(0, 1), lwd = 2,
+          mean.labels=FALSE, connect=TRUE,
+          ccol="red", pch=7 ,
+          n.label=TRUE, text.n.label="n = ",
+          xlab = "Passages", ylab = "Kendall's Tau-b rank correlation value",
+          main="Colocalization of Myosin-9 and F-actin in WJMSC-1 cells, 
+          \nMean Plot with 95% CI") + scale_x_discrete(name ="Passages", 
+                                                       limits=c("p7", "p9", "p12", 
+                                                                "p15", "p18", 
+                                                                "p21", "p25", "p27", 
+                                                                "p28")) +
+  scale_y_continuous(name="Kendall's Tau-b rank correlation value", limits=c(0, 1))
+
 
 
 
