@@ -1,17 +1,5 @@
 library(trajr)
 library(tibble)
-library(ggplot2)
-library(plyr)
-library(dplyr) 
-library(ggpubr)
-library(car)
-library(stringi)
-library(Hmisc)
-library(gplots)
-library(PMCMRplus)
-library(dunn.test)
-library(DescTools)
-library(ggsignif)
 
 ##### Track analysis function ###
 
@@ -19,9 +7,9 @@ traj_analysis <- function(input) {
   
   data <- read.csv(input)
   
-  traj_params <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), 
+  traj_params <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), 
                           c("track", 
-                            "lenght",
+                            "length",
                             "distance",
                             "square_displacement",
                             "mean_speed",
@@ -29,7 +17,8 @@ traj_analysis <- function(input) {
                             "max_speed",
                             "min_speed",
                             "sinuosity",
-                            "emax"))
+                            "emax",
+                            "probe"))
   
   for (i in unique(data$Track)) {
 
@@ -54,7 +43,7 @@ traj_analysis <- function(input) {
     traj_params <- add_row(traj_params, 
             track = i,
             # total length of the trajectory
-            lenght = TrajLength(trj),
+            length = TrajLength(trj),
             # straight-line distance from the start to the end of the trajectory
             distance = TrajDistance(trj),
             # expected square displacement of a correlated random walk
@@ -66,21 +55,30 @@ traj_analysis <- function(input) {
             min_speed = min(derivs$speed),
             # Measures of straightness
             sinuosity = TrajSinuosity(trj),
-            emax = TrajEmax(resampled)
+            emax = TrajEmax(resampled),
+            probe = 'p36'
             )
     
   }
 
   # print(traj_params)
   write.csv(traj_params, file = 'track.csv')
-  a <<- traj_params
+  tracks <<- traj_params
   return(traj_params)
   
 }
 
 
-# call 
+# Call to function
 traj_analysis('F0001.csv')
 
 
-scatterplot(a$track, a$length)
+
+
+
+# Plot results
+tracks$probe <- as.factor(tracks$probe)
+
+scatterplot(tracks$probe, tracks$length)
+
+scatterplot(tracks$probe, tracks$length)
